@@ -1,0 +1,30 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFakeItEasy", "src\AutoFakeItEasy\AutoFakeItEasy.csproj", "{BDD5FA67-47BF-466D-86A2-3CF2D69705B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C98F1AC9-624B-4F4F-ABB8-D66810380F61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{87F051B8-2252-4E56-9379-1D853C978766}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFakeItEasy.UnitTests", "tests\AutoFakeItEasy.UnitTests\AutoFakeItEasy.UnitTests.csproj", "{438334B4-1444-4012-BB92-4FE71D8CBEC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDD5FA67-47BF-466D-86A2-3CF2D69705B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDD5FA67-47BF-466D-86A2-3CF2D69705B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDD5FA67-47BF-466D-86A2-3CF2D69705B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDD5FA67-47BF-466D-86A2-3CF2D69705B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{438334B4-1444-4012-BB92-4FE71D8CBEC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{438334B4-1444-4012-BB92-4FE71D8CBEC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{438334B4-1444-4012-BB92-4FE71D8CBEC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{438334B4-1444-4012-BB92-4FE71D8CBEC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BDD5FA67-47BF-466D-86A2-3CF2D69705B3} = {C98F1AC9-624B-4F4F-ABB8-D66810380F61}
+		{438334B4-1444-4012-BB92-4FE71D8CBEC1} = {87F051B8-2252-4E56-9379-1D853C978766}
+	EndGlobalSection
+EndGlobal
