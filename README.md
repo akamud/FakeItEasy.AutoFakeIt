@@ -70,7 +70,7 @@ namespace UnitTests
             // you can get any dependency used/generated
             var theAutoFakedDependency = autoFakeIt.Resolve<MyOtherDependency>();
 
-            // you can setup or assert the generated fakes since it 
+            // you can setup or assert the generated fakes since it is
             // just an ordinary FakeItEasy's fake object
             A.CallTo(() => theAutoFakedDependency.MyMethod()).Returns("Faked");
         }
