@@ -89,8 +89,8 @@ namespace FakeItEasy.AutoFakeIt
         }
 
         /// <summary>
-        /// Explicitly sets an object to use when someone asks for an object of the given type.
-        /// </summary>
+        /// Explicitly sets an object to use when someone asks for an object of the given type, either on a
+        /// <see cref="Resolve{T}"/> or for a dependency on <see cref="Generate{T}"/>. </summary>
         /// <remarks><para>This is useful for providing your own specific instance of a type, either because you can't
         /// use an automatically generated fake, or because you have a concrete type that you prefer to use.</para>
         /// <para>It will override any previously registered object of the same type of <typeparamref name="T"/>.</para></remarks>
