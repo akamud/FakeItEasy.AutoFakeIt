@@ -1,8 +1,8 @@
 namespace FakeItEasy.AutoFakeIt.UnitTests.Stubs
 {
-    public class DependencyB
+    public abstract class DependencyB
     {
-        public virtual string Method() => "A";
+        public virtual string Method() => "B";
     }
 
     public class MultipleConstructorsSut
