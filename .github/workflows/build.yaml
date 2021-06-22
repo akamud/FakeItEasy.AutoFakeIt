@@ -1,0 +1,42 @@
+name: Build
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches: [main]
+
+jobs:
+    build:
+        env:
+            DOTNET_CLI_TELEMETRY_OPTOUT: 1
+        name: Build
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os:
+                - windows-latest
+                - macos-latest
+                - ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Build
+              run: dotnet build ./src/FakeItEasy.AutoFakeIt/FakeItEasy.AutoFakeIt.csproj --configuration Release
+
+            - name: Test
+              run: dotnet test ./tests/FakeItEasy.AutoFakeIt.UnitTests/FakeItEasy.AutoFakeIt.UnitTests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./../../coverage/'
+
+            - name: Upload coverage to Codecov
+              uses: codecov/codecov-action@v1.2.1
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  directory: ./coverage/
+                  flags: unittests
+                  name: codecov-umbrella
+                  fail_ci_if_error: true
+                  path_to_write_report: ./coverage/codecov_report.txt
+                  verbose: true

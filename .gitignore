@@ -152,6 +152,3 @@ fontello-*/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-# HotReload
-!tools/Xamarin.Forms.HotReload.Observer.exe
