@@ -13,6 +13,13 @@ namespace FakeItEasy.AutoFakeIt
     {
         private readonly IDictionary<Type, object> _fakedObjects = new Dictionary<Type, object>();
 
+        /// <summary>
+        /// Generates a <typeparamref name="T"/> automatically injecting FakeItEasy's fakes for all its dependencies.
+        /// </summary>
+        /// <typeparam name="T">The class you want to generate, usually your System Under Test.</typeparam>
+        /// <returns>A class with all its dependencies faked.</returns>
+        /// <exception cref="ArgumentException">Throws an ArgumentException if we can't find a public constructor
+        /// with "fakeable" dependencies.</exception>
         public T Generate<T>() where T : class
         {
             var constructors = typeof(T).GetConstructors()
@@ -64,6 +71,12 @@ namespace FakeItEasy.AutoFakeIt
             }
         }
 
+        /// <summary>
+        /// Returns the object used for <typeparamref name="T"/>. If an object of the given type was not explicitly
+        /// provided, it will create a FakeItEasy's fake that will be used for all subsequent calls.
+        /// </summary>
+        /// <typeparam name="T">The fake object you want to retrieve.</typeparam>
+        /// <returns>An object of the given type, either previously provided or a new one just generated with FakeItEasy.</returns>
         public T Resolve<T>() where T : class
         {
             if (_fakedObjects.ContainsKey(typeof(T)))
@@ -75,6 +88,15 @@ namespace FakeItEasy.AutoFakeIt
             }
         }
 
+        /// <summary>
+        /// Explicitly sets an object to use when someone asks for an object of the given type.
+        /// </summary>
+        /// <remarks><para>This is useful for providing your own specific instance of a type, either because you can't
+        /// use an automatically generated fake, or because you have a concrete type that you prefer to use.</para>
+        /// <para>It will override any previously registered object of the same type of <typeparamref name="T"/>.</para></remarks>
+        /// <param name="dependency">The object you want to set.</param>
+        /// <typeparam name="T">The type of the object you want to register it as. You can set an object for a specific
+        /// type, for example, you can provide an object to be used when someone asks for an interface.</typeparam>
         public void Provide<T>(T dependency) where T : class
         {
             if (_fakedObjects.ContainsKey(typeof(T)))
