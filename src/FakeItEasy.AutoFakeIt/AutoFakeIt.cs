@@ -6,6 +6,9 @@ using System.Reflection;
 
 namespace FakeItEasy.AutoFakeIt
 {
+    /// <summary>
+    /// The main entrypoint to automatically generate classes with faked dependencies.
+    /// </summary>
     public class AutoFakeIt
     {
         private readonly IDictionary<Type, object> _fakedObjects = new Dictionary<Type, object>();
