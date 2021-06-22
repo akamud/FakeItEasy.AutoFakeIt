@@ -3,6 +3,7 @@ using FakeItEasy.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace AutoFakeItEasy
 {
@@ -19,17 +20,11 @@ namespace AutoFakeItEasy
             {
                 try
                 {
-                    var candidateFakeObjects = ctor.GetParameters()
-                        .Where(p => !_fakedObjects.ContainsKey(p.ParameterType))
-                        .ToDictionary(p => p.ParameterType, p => Create.Fake(p.ParameterType));
+                    var candidateFakeObjects = GenerateCandidateFakeObjects(ctor);
 
-                    var generatedObject = (T)ctor.Invoke(candidateFakeObjects.Concat(_fakedObjects)
-                        .ToDictionary(x => x.Key, x => x.Value).Values.ToArray());
+                    var generatedObject = (T)ctor.Invoke(candidateFakeObjects.Values.ToArray());
 
-                    foreach (var temporaryFakedObject in candidateFakeObjects)
-                    {
-                        _fakedObjects.Add(temporaryFakedObject.Key, temporaryFakedObject.Value);
-                    }
+                    InsertMissingFakedObjects(candidateFakeObjects);
 
                     return generatedObject;
                 }
@@ -40,6 +35,28 @@ namespace AutoFakeItEasy
             }
 
             throw new ArgumentException("No suitable constructor found for type.");
+        }
+
+        private Dictionary<Type, object> GenerateCandidateFakeObjects(ConstructorInfo ctor)
+        {
+            var candidateFakeObjects = new Dictionary<Type, object>();
+            foreach (var param in ctor.GetParameters())
+            {
+                candidateFakeObjects.Add(param.ParameterType, _fakedObjects.ContainsKey(param.ParameterType)
+                    ? _fakedObjects[param.ParameterType]
+                    : Create.Fake(param.ParameterType));
+            }
+
+            return candidateFakeObjects;
+        }
+
+        private void InsertMissingFakedObjects(Dictionary<Type, object> candidateFakeObjects)
+        {
+            foreach (var temporaryFakedObject in candidateFakeObjects)
+            {
+                if (!_fakedObjects.ContainsKey(temporaryFakedObject.Key))
+                    _fakedObjects.Add(temporaryFakedObject.Key, temporaryFakedObject.Value);
+            }
         }
 
         public T Resolve<T>() where T : class

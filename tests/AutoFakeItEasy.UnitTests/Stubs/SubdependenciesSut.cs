@@ -10,6 +10,17 @@ namespace AutoFakeItEasy.UnitTests.Stubs
         }
     }
 
+    public class AnotherDependency
+    {
+        public Subdependency Subdependency { get; }
+
+        public AnotherDependency(Subdependency subdependency)
+        {
+            Subdependency = subdependency;
+        }
+    }
+
+
     public class Subdependency
     {
         public virtual string Method() => "Sub";
@@ -19,7 +30,7 @@ namespace AutoFakeItEasy.UnitTests.Stubs
     {
         public Dependency Dependency { get; }
 
-        public SubdependenciesSut(Dependency dependency)
+        public SubdependenciesSut(Dependency dependency, AnotherDependency anotherDependency)
         {
             Dependency = dependency;
         }

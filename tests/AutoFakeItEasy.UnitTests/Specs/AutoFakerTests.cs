@@ -37,11 +37,22 @@ namespace AutoFakeItEasy.UnitTests.Specs
         [Test]
         public void GenerateShouldReturnAnInstanceOfClassWithSubdependencies()
         {
-            var sut = new AutoFaker().Generate<SubdependenciesSut>();
+            var autoFaker = new AutoFaker();
+            var sut = autoFaker.Generate<SubdependenciesSut>();
 
             sut.Should().NotBeNull();
             A.CallTo(() => sut.Dependency.Subdependency.Method()).Returns("Faked");
             sut.Dependency.Subdependency.Method().Should().Be("Faked");
+        }
+
+        [Test]
+        public void GenerateShouldReturnAnInstanceOfClassWithSubdependenciesDespiteItsOrder()
+        {
+            var autoFaker = new AutoFaker();
+            autoFaker.Resolve<Dependency>();
+            var sut = autoFaker.Generate<SubdependenciesSut>();
+
+            sut.Should().NotBeNull();
         }
 
         [Test]
