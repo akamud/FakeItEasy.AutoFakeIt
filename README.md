@@ -8,7 +8,6 @@ A very simple, yet flexible, "AutoFaker" for [FakeItEasy](https://fakeiteasy.git
 
 ## Getting started
 
-[![NuGet](https://img.shields.io/nuget/v/Xamarin.Forms.TestingLibrary.svg?style=flat)](https://img.shields.io/nuget/v/Xamarin.Forms.TestingLibrary.svg?style=flat)
 [![Nuget](https://img.shields.io/nuget/v/FakeItEasy.AutoFakeIt.svg?style=flat)](https://www.nuget.org/packages/FakeItEasy.AutoFakeIt)
 
 [NuGet package](https://www.nuget.org/packages/FakeItEasy.AutoFakeIt) available:
