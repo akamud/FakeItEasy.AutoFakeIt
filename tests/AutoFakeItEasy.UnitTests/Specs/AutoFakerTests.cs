@@ -35,6 +35,16 @@ namespace AutoFakeItEasy.UnitTests.Specs
         }
 
         [Test]
+        public void GenerateShouldReturnAnInstanceOfClassWithSubdependencies()
+        {
+            var sut = new AutoFaker().Generate<SubdependenciesSut>();
+
+            sut.Should().NotBeNull();
+            A.CallTo(() => sut.Dependency.Subdependency.Method()).Returns("Faked");
+            sut.Dependency.Subdependency.Method().Should().Be("Faked");
+        }
+
+        [Test]
         public void GenerateShouldReturnAnInstanceOfClassWithTheMostFakedDependenciesPossible()
         {
             var sut = new AutoFaker().Generate<MultipleConstructorsSut>();
@@ -97,24 +107,24 @@ namespace AutoFakeItEasy.UnitTests.Specs
         }
 
         [Test]
-        public void ResolveDeveRetornarObjetosRegistradosComTiposExplicitos()
+        public void ResolveShouldReturnObjectsRegisteredWithExplicitTypes()
         {
-             var autoFaker = new AutoFaker();
-             var depA = new DependencyA();
-             autoFaker.Provide<IDependencyA>(depA);
+            var autoFaker = new AutoFaker();
+            var depA = new DependencyA();
+            autoFaker.Provide<IDependencyA>(depA);
 
-             autoFaker.Resolve<IDependencyA>().Should().Be(depA);
+            autoFaker.Resolve<IDependencyA>().Should().Be(depA);
         }
 
         [Test]
         public void GenerateShouldUseProvidedDependency()
         {
-             var autoFaker = new AutoFaker();
-             var depA = new DependencyA();
-             autoFaker.Provide(depA);
+            var autoFaker = new AutoFaker();
+            var depA = new DependencyA();
+            autoFaker.Provide(depA);
 
-             var sut = autoFaker.Generate<DependenciesSut>();
-             sut.DependencyA.Should().Be(depA);
+            var sut = autoFaker.Generate<DependenciesSut>();
+            sut.DependencyA.Should().Be(depA);
         }
     }
 }
