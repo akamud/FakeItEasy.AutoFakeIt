@@ -1,4 +1,4 @@
-namespace AutoFakeItEasy.UnitTests.Stubs
+namespace FakeItEasy.AutoFakeIt.UnitTests.Stubs
 {
     public class DependencyA : IDependencyA
     {

@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\AutoFakeItEasy\AutoFakeItEasy.csproj" />
+      <ProjectReference Include="..\..\src\FakeItEasy.AutoFakeIt\FakeItEasy.AutoFakeIt.csproj" />
     </ItemGroup>
 
 </Project>

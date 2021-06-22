@@ -1,13 +1,12 @@
-using FakeItEasy;
 using FakeItEasy.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace AutoFakeItEasy
+namespace FakeItEasy.AutoFakeIt
 {
-    public class AutoFaker
+    public class AutoFakeIt
     {
         private readonly IDictionary<Type, object> _fakedObjects = new Dictionary<Type, object>();
 
