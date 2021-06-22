@@ -13,7 +13,7 @@ A very simple, yet flexible, "AutoFaker" for [FakeItEasy](https://fakeiteasy.git
 PM> Install-Package FakeItEasy.AutoFakeIt
 ```
 
-I focused on providing a familiar and very simple-to-use API, without any unnecessary limitations, so you can automatically generate your [System Under Test (SUT)](https://en.wikipedia.org/wiki/System_under_test) with all the dependencies faked, wether they are classes or interfaces. You can also customize and retrieve any dependency you want.
+I focused on providing a familiar and very simple-to-use API, without any unnecessary limitations, so you can automatically generate your [System Under Test (SUT)](https://en.wikipedia.org/wiki/System_under_test) with all the dependencies faked, whether they are classes or interfaces. You can also customize and retrieve any dependency you want.
 
 ```csharp
 using FakeItEasy;
