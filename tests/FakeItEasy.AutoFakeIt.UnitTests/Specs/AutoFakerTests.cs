@@ -1,6 +1,5 @@
-using FakeItEasy.AutoFakeIt;
-using FakeItEasy;
 using FakeItEasy.AutoFakeIt.UnitTests.Stubs;
+using FakeItEasy.Core;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
@@ -22,7 +21,9 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         {
             Action act = () => new AutoFakeIt().Generate<UnfakeableSut>();
 
-            act.Should().Throw<ArgumentException>().WithMessage("No suitable constructor found for type.");
+            act.Should().Throw<ArgumentException>()
+                .WithMessage($"No suitable constructor found for type '{typeof(UnfakeableSut).FullName}'.")
+                .WithInnerException<FakeCreationException>();
         }
 
         [Test]

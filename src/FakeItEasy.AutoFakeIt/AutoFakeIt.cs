@@ -13,27 +13,30 @@ namespace FakeItEasy.AutoFakeIt
         public T Generate<T>() where T : class
         {
             var constructors = typeof(T).GetConstructors()
-                .OrderByDescending(ctor => ctor.GetParameters().Length);
+                .OrderByDescending(ctor => ctor.GetParameters().Length)
+                .ToList();
 
-            foreach (var ctor in constructors)
+            Exception? lastThrownException = null;
+            for (var i = 0; i < constructors.Count; i++)
             {
                 try
                 {
-                    var candidateFakeObjects = GenerateCandidateFakeObjects(ctor);
+                    var candidateFakeObjects = GenerateCandidateFakeObjects(constructors[i]);
 
-                    var generatedObject = (T)ctor.Invoke(candidateFakeObjects.Values.ToArray());
+                    var generatedObject = (T)constructors[i].Invoke(candidateFakeObjects.Values.ToArray());
 
                     InsertMissingFakedObjects(candidateFakeObjects);
 
                     return generatedObject;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    lastThrownException = ex;
                     // Keep looking for a suitable constructor
                 }
             }
 
-            throw new ArgumentException("No suitable constructor found for type.");
+            throw new ArgumentException($"No suitable constructor found for type '{typeof(T)}'.", lastThrownException);
         }
 
         private Dictionary<Type, object> GenerateCandidateFakeObjects(ConstructorInfo ctor)
