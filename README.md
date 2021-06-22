@@ -2,13 +2,11 @@
 
 ![Build](https://github.com/akamud/FakeItEasy.AutoFakeIt/workflows/Build/badge.svg)
 [![codecov](https://codecov.io/gh/akamud/FakeItEasy.AutoFakeIt/branch/main/graph/badge.svg?token=6V0YZL6II9)](https://codecov.io/gh/akamud/FakeItEasy.AutoFakeIt)
-
+[![Nuget](https://img.shields.io/nuget/v/FakeItEasy.AutoFakeIt.svg?style=flat)](https://www.nuget.org/packages/FakeItEasy.AutoFakeIt)
 
 A very simple, yet flexible, "AutoFaker" for [FakeItEasy](https://fakeiteasy.github.io/) to easily auto generate classes with faked dependencies.
 
 ## Getting started
-
-[![Nuget](https://img.shields.io/nuget/v/FakeItEasy.AutoFakeIt.svg?style=flat)](https://www.nuget.org/packages/FakeItEasy.AutoFakeIt)
 
 [NuGet package](https://www.nuget.org/packages/FakeItEasy.AutoFakeIt) available:
 ```
