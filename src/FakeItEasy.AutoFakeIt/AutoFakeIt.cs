@@ -27,13 +27,13 @@ namespace FakeItEasy.AutoFakeIt
                 .ToList();
 
             Exception? lastThrownException = null;
-            for (var i = 0; i < constructors.Count; i++)
+            foreach (var ctor in constructors)
             {
                 try
                 {
-                    var candidateFakeObjects = GenerateCandidateFakeObjects(constructors[i]);
+                    var candidateFakeObjects = GenerateCandidateFakeObjects(ctor);
 
-                    var generatedObject = (T)constructors[i].Invoke(candidateFakeObjects.Values.ToArray());
+                    var generatedObject = (T)ctor.Invoke(candidateFakeObjects.Values.ToArray());
 
                     InsertMissingFakedObjects(candidateFakeObjects);
 
