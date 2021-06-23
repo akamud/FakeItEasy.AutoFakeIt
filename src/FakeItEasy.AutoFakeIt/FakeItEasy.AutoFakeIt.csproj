@@ -9,7 +9,6 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>FakeItEasy.AutoFakeIt</Title>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <DocumentationFile>bin\$(Configuration)\FakeItEasy.AutoFakeIt.xml</DocumentationFile>
         <Version>1.0.1</Version>
         <Authors>Mahmoud Ali</Authors>
@@ -22,7 +21,7 @@
         <Company/>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <DebugType>embedded</DebugType>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
