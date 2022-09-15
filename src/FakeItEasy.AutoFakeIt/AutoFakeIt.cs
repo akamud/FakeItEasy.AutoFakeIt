@@ -77,7 +77,7 @@ namespace FakeItEasy.AutoFakeIt
         /// </summary>
         /// <typeparam name="T">The fake object you want to retrieve.</typeparam>
         /// <returns>An object of the given type, either previously provided or a new one just generated with FakeItEasy.</returns>
-        public T Resolve<T>() where T : class
+        public T Resolve<T>() where T : notnull
         {
             if (_fakedObjects.ContainsKey(typeof(T)))
                 return (T)_fakedObjects[typeof(T)];
@@ -97,7 +97,7 @@ namespace FakeItEasy.AutoFakeIt
         /// <param name="dependency">The object you want to set.</param>
         /// <typeparam name="T">The type of the object you want to register it as. You can set an object for a specific
         /// type, for example, you can provide an object to be used when someone asks for an interface.</typeparam>
-        public void Provide<T>(T dependency) where T : class
+        public void Provide<T>(T dependency) where T : notnull
         {
             if (_fakedObjects.ContainsKey(typeof(T)))
                 _fakedObjects[typeof(T)] = dependency;

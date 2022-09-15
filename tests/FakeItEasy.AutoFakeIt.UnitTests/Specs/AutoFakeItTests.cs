@@ -108,6 +108,26 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         }
 
         [Test]
+        public void ResolveShouldReturnProvidedValueTypeDependency()
+        {
+            var autoFakeIt = new AutoFakeIt();
+            var structDep = new ValueDependency();
+            autoFakeIt.Provide(structDep);
+
+            autoFakeIt.Resolve<ValueDependency>().Should().Be(structDep);
+        }
+
+        [Test]
+        public void GenerateShouldReturnProvidedValueTypeDependency()
+        {
+            var autoFakeIt = new AutoFakeIt();
+            var structDep = new ValueDependency();
+            autoFakeIt.Provide(structDep);
+
+            autoFakeIt.Generate<StructDependenciesSut>().ValueDependency.Should().Be(structDep);
+        }
+
+        [Test]
         public void ResolveShouldUpdateProvidedDependencyWhenOneIsAlreadyAvailable()
         {
             var autoFakeIt = new AutoFakeIt();
