@@ -36,7 +36,7 @@ jobs:
               run: dotnet test ./tests/FakeItEasy.AutoFakeIt.UnitTests/FakeItEasy.AutoFakeIt.UnitTests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./../../coverage/'
 
             - name: Upload coverage to Codecov
-              uses: codecov/codecov-action@v1.2.1
+              uses: codecov/codecov-action@v3
               with:
                   token: ${{ secrets.CODECOV_TOKEN }}
                   directory: ./coverage/
