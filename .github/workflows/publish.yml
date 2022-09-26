@@ -19,7 +19,7 @@ jobs:
 
       - name: publish FakeItEasy.AutoFakeIt
         id: publish_nuget_common
-        uses: rohith/publish-nuget@v2
+        uses: alirezanet/publish-nuget@v3.0.0
         with:
           PROJECT_FILE_PATH: src/FakeItEasy.AutoFakeIt/FakeItEasy.AutoFakeIt.csproj
           PACKAGE_NAME: FakeItEasy.AutoFakeIt
