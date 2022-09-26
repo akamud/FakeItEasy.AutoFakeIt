@@ -20,12 +20,12 @@ namespace FakeItEasy.AutoFakeIt
         /// <returns>A class with all its dependencies faked.</returns>
         /// <exception cref="ArgumentException">Throws an ArgumentException if we can't find a public constructor
         /// with "fakeable" dependencies.</exception>
-        public T Generate<T>() where T : class => (T)Generate(typeof(T));
+        public T Generate<T>() where T : notnull => (T)Generate(typeof(T));
 
         /// <summary>
-        /// Generates a object automatically injecting FakeItEasy's fakes for all its dependencies.
+        /// Generates an object of the specified type automatically injecting FakeItEasy's fakes for all its dependencies.
         /// </summary>
-        /// <param name="type">The class you want to generate, usually your System Under Test.</param>
+        /// <param name="type">The type of the class you want to generate, usually your System Under Test.</param>
         /// <returns>A class with all its dependencies faked.</returns>
         /// <exception cref="ArgumentException">Throws an ArgumentException if we can't find a public constructor
         /// with "fakeable" dependencies.</exception>
@@ -87,17 +87,10 @@ namespace FakeItEasy.AutoFakeIt
         /// </summary>
         /// <typeparam name="T">The fake object you want to retrieve.</typeparam>
         /// <returns>An object of the given type, either previously provided or a new one just generated with FakeItEasy.</returns>
-        public T Resolve<T>() where T : notnull
-        {
-            if (_fakedObjects.ContainsKey(typeof(T)))
-                return (T)_fakedObjects[typeof(T)];
-
-            _fakedObjects[typeof(T)] = A.Fake<T>();
-            return (T)_fakedObjects[typeof(T)];
-        }
+        public T Resolve<T>() where T : notnull => (T)Resolve(typeof(T));
 
         /// <summary>
-        /// Returns the object used for <param name="type" />. If an object of the given type was not explicitly
+        /// Returns the object used for the type passed. If an object of the given type was not explicitly
         /// provided, it will create a FakeItEasy's fake that will be used for all subsequent calls.
         /// </summary>
         /// <returns>An object of the given type, either previously provided or a new one just generated with FakeItEasy.</returns>
@@ -105,9 +98,11 @@ namespace FakeItEasy.AutoFakeIt
         {
             if (_fakedObjects.ContainsKey(type))
                 return _fakedObjects[type];
-
-            _fakedObjects[type] = Create.Fake(type);
-            return _fakedObjects[type];
+            else
+            {
+                _fakedObjects[type] = Create.Fake(type);
+                return _fakedObjects[type];
+            }
         }
 
 
@@ -127,6 +122,7 @@ namespace FakeItEasy.AutoFakeIt
         /// <see cref="Resolve"/> or for a dependency on <see cref="Generate"/>. </summary>
         /// <remarks><para>This is useful for providing your own specific instance of a type, either because you can't
         /// use an automatically generated fake, or because you have a concrete type that you prefer to use.</para>
+        /// <param name="registerType">The type of the object you want to provide.</param>
         /// <param name="dependency">The object you want to set.</param>
         /// <para>It will override any previously registered object of the same type of <param name="registerType"/>.</para></remarks>
         /// <exception cref="ArgumentException">Throws an ArgumentException if dependency is not assignable to registerType.</exception>

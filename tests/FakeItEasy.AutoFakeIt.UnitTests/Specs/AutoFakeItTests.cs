@@ -159,5 +159,16 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
             var sut = autoFakeIt.Generate<DependenciesSut>();
             sut.DependencyA.Should().Be(depA);
         }
+
+        [Test]
+        public void GenericResolveShouldWorkWithNonGenericProvide()
+        {
+            var autoFakeIt = new AutoFakeIt();
+            var depA = new DependencyA();
+            autoFakeIt.Provide(typeof(DependencyA), depA);
+
+            var resolvedDepA = autoFakeIt.Resolve<DependencyA>();
+            resolvedDepA.Should().NotBeNull();
+        }
     }
 }
