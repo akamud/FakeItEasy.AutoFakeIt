@@ -6,12 +6,12 @@ using System;
 
 namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
 {
-    public class AutoFakeItTests
+    public class AutoFakeItTestsNonGeneric
     {
         [Test]
         public void GenerateShouldReturnAnInstanceOfClassWithoutDependencies()
         {
-            var sut = new AutoFakeIt().Generate<SimpleSut>();
+            var sut = new AutoFakeIt().Generate(typeof(SimpleSut));
 
             sut.Should().NotBeNull();
         }
@@ -19,7 +19,7 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         [Test]
         public void GenerateShouldThrowExceptionWhenClassHasNoConstructorsWithFakeableParameters()
         {
-            Action act = () => new AutoFakeIt().Generate<UnfakeableSut>();
+            Action act = () => new AutoFakeIt().Generate(typeof(UnfakeableSut));
 
             act.Should().Throw<ArgumentException>()
                 .WithMessage($"No suitable constructor found for type '{typeof(UnfakeableSut).FullName}'.")
@@ -29,7 +29,7 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         [Test]
         public void GenerateShouldReturnAnInstanceOfClassWithFakedDependencies()
         {
-            var sut = new AutoFakeIt().Generate<DependenciesSut>();
+            var sut = (DependenciesSut)new AutoFakeIt().Generate(typeof(DependenciesSut));
 
             sut.Should().NotBeNull();
             A.CallTo(() => sut.DependencyA.Method()).Returns("Faked");
@@ -40,7 +40,7 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         public void GenerateShouldReturnAnInstanceOfClassWithSubdependencies()
         {
             var autoFakeIt = new AutoFakeIt();
-            var sut = autoFakeIt.Generate<SubdependenciesSut>();
+            var sut = (SubdependenciesSut)autoFakeIt.Generate(typeof(SubdependenciesSut));
 
             sut.Should().NotBeNull();
             A.CallTo(() => sut.Dependency.Subdependency.Method()).Returns("Faked");
@@ -51,8 +51,8 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         public void GenerateShouldReturnAnInstanceOfClassWithSubdependenciesDespiteItsOrder()
         {
             var autoFakeIt = new AutoFakeIt();
-            autoFakeIt.Resolve<Dependency>();
-            var sut = autoFakeIt.Generate<SubdependenciesSut>();
+            autoFakeIt.Resolve(typeof(Dependency));
+            var sut = autoFakeIt.Generate(typeof(SubdependenciesSut));
 
             sut.Should().NotBeNull();
         }
@@ -60,7 +60,7 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         [Test]
         public void GenerateShouldReturnAnInstanceOfClassWithTheMostFakedDependenciesPossible()
         {
-            var sut = new AutoFakeIt().Generate<MultipleConstructorsSut>();
+            var sut = (MultipleConstructorsSut)new AutoFakeIt().Generate(typeof(MultipleConstructorsSut));
 
             sut.Should().NotBeNull();
             A.CallTo(() => sut.DependencyB.Method()).Returns("Faked");
@@ -71,8 +71,8 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         public void GenerateShouldReusePreviouslyResolvedType()
         {
             var autoFakeIt = new AutoFakeIt();
-            var depA = autoFakeIt.Resolve<DependencyA>();
-            var sut = autoFakeIt.Generate<DependenciesSut>();
+            var depA = autoFakeIt.Resolve(typeof(DependencyA));
+            var sut = (DependenciesSut)autoFakeIt.Generate(typeof(DependenciesSut));
 
             sut.DependencyA.Should().Be(depA);
         }
@@ -81,16 +81,16 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         public void ResolveShouldReturnGeneratedFakeTypes()
         {
             var autoFakeIt = new AutoFakeIt();
-            var sut = autoFakeIt.Generate<DependenciesSut>();
+            var sut = (DependenciesSut)autoFakeIt.Generate(typeof(DependenciesSut));
 
-            autoFakeIt.Resolve<DependencyA>().Should().Be(sut.DependencyA);
+            autoFakeIt.Resolve(typeof(DependencyA)).Should().Be(sut.DependencyA);
         }
 
         [Test]
         public void ResolveShouldGenerateAndReturnAFakeTypeWhenNoneIsAvailable()
         {
             var autoFakeIt = new AutoFakeIt();
-            var depA = autoFakeIt.Resolve<DependencyA>();
+            var depA = (DependencyA)autoFakeIt.Resolve(typeof(DependencyA));
 
             depA.Should().NotBeNull();
             A.CallTo(() => depA.Method()).Returns("Faked");
@@ -102,9 +102,9 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         {
             var autoFakeIt = new AutoFakeIt();
             var depA = new DependencyA();
-            autoFakeIt.Provide(depA);
+            autoFakeIt.Provide(depA.GetType(), depA);
 
-            autoFakeIt.Resolve<DependencyA>().Should().Be(depA);
+            autoFakeIt.Resolve(typeof(DependencyA)).Should().Be(depA);
         }
 
         [Test]
@@ -112,9 +112,9 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         {
             var autoFakeIt = new AutoFakeIt();
             var structDep = new ValueDependency();
-            autoFakeIt.Provide(structDep);
+            autoFakeIt.Provide(structDep.GetType(), structDep);
 
-            autoFakeIt.Resolve<ValueDependency>().Should().Be(structDep);
+            autoFakeIt.Resolve(typeof(ValueDependency)).Should().Be(structDep);
         }
 
         [Test]
@@ -122,9 +122,10 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         {
             var autoFakeIt = new AutoFakeIt();
             var structDep = new ValueDependency();
-            autoFakeIt.Provide(structDep);
+            autoFakeIt.Provide(structDep.GetType(), structDep);
 
-            autoFakeIt.Generate<StructDependenciesSut>().ValueDependency.Should().Be(structDep);
+            var generated = (StructDependenciesSut)autoFakeIt.Generate(typeof(StructDependenciesSut));
+            generated.ValueDependency.Should().Be(structDep);
         }
 
         [Test]
@@ -132,11 +133,11 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         {
             var autoFakeIt = new AutoFakeIt();
             var depA = new DependencyA();
-            autoFakeIt.Provide(depA);
+            autoFakeIt.Provide(depA.GetType(), depA);
             var depA2 = new DependencyA();
-            autoFakeIt.Provide(depA2);
+            autoFakeIt.Provide(depA.GetType(), depA2);
 
-            autoFakeIt.Resolve<DependencyA>().Should().Be(depA2);
+            autoFakeIt.Resolve(typeof(DependencyA)).Should().Be(depA2);
         }
 
         [Test]
@@ -144,9 +145,9 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         {
             var autoFakeIt = new AutoFakeIt();
             var depA = new DependencyA();
-            autoFakeIt.Provide<IDependencyA>(depA);
+            autoFakeIt.Provide(typeof(IDependencyA), depA);
 
-            autoFakeIt.Resolve<IDependencyA>().Should().Be(depA);
+            autoFakeIt.Resolve(typeof(IDependencyA)).Should().Be(depA);
         }
 
         [Test]
@@ -154,21 +155,21 @@ namespace FakeItEasy.AutoFakeIt.UnitTests.Specs
         {
             var autoFakeIt = new AutoFakeIt();
             var depA = new DependencyA();
-            autoFakeIt.Provide(depA);
+            autoFakeIt.Provide(typeof(DependencyA), depA);
 
-            var sut = autoFakeIt.Generate<DependenciesSut>();
+            var sut = (DependenciesSut)autoFakeIt.Generate(typeof(DependenciesSut));
             sut.DependencyA.Should().Be(depA);
         }
 
         [Test]
-        public void GenericResolveShouldWorkWithNonGenericProvide()
+        public void ProvideShouldThrowExceptionWhenDependencyIsNotAssignableToRegisterType()
         {
             var autoFakeIt = new AutoFakeIt();
             var depA = new DependencyA();
-            autoFakeIt.Provide(typeof(DependencyA), depA);
+            var act = () => autoFakeIt.Provide(typeof(DependencyB), depA);
 
-            var resolvedDepA = autoFakeIt.Resolve<DependencyA>();
-            resolvedDepA.Should().NotBeNull();
+            act.Should().Throw<ArgumentException>()
+             .WithMessage($"Dependency type '{typeof(DependencyB).FullName}' is not assignable to '{typeof(DependencyA).FullName}'.");
         }
     }
 }

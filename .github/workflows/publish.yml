@@ -13,9 +13,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 5.0.301
+            global-json-file: global.json
 
       - name: publish FakeItEasy.AutoFakeIt
         id: publish_nuget_common

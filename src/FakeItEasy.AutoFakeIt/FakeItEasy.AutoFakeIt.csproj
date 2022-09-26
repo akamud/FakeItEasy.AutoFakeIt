@@ -18,7 +18,7 @@
         <RepositoryType>Git</RepositoryType>
         <PackageTags>fakeiteasy, unit-testing, nunit, xunit, mstest</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Company/>
+        <Company />
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
@@ -32,7 +32,7 @@
         <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="FakeItEasy" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+        <PackageReference Include="FakeItEasy" Version="4.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     </ItemGroup>
 </Project>
