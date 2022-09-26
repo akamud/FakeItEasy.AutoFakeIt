@@ -10,7 +10,7 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Title>FakeItEasy.AutoFakeIt</Title>
         <DocumentationFile>bin\$(Configuration)\FakeItEasy.AutoFakeIt.xml</DocumentationFile>
-        <Version>1.0.2</Version>
+        <Version>2.0.0</Version>
         <Authors>Mahmoud Ali</Authors>
         <Description>A very simple, yet flexible, "AutoFaker" for FakeItEasy to easily auto generate classes with faked dependencies.</Description>
         <PackageProjectUrl>https://github.com/akamud/FakeItEasy.AutoFakeIt</PackageProjectUrl>
